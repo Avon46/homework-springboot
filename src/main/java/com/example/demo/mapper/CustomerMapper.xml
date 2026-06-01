@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.CustomerMapper">
+<resultMap id="CustomerResultMap" type="com.example.demo.entity.Customer">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="identityNumber" column="identity_number"/>
+        <result property="birthday" column="birthday"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <sql id="CustomerColumns">
+        id,
+        name,
+        phone,
+        email,
+        identity_number,
+        birthday,
+        status
+    </sql>
+
+    <select id="findAll" resultMap="CustomerResultMap">
+        SELECT
+        <include refid="CustomerColumns"/>
+        FROM customers
+    </select>
+
+    <select id="findById"
+            parameterType="java.lang.Integer"
+            resultMap="CustomerResultMap">
+        SELECT
+        <include refid="CustomerColumns"/>
+        FROM customers
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert"
+            parameterType="com.example.demo.entity.Customer"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO customers (
+            name,
+            phone,
+            email,
+            identity_number,
+            birthday,
+            status
+        ) VALUES (
+            #{name},
+            #{phone},
+            #{email},
+            #{identityNumber},
+            #{birthday},
+            #{status}
+        )
+    </insert>
+
+    <update id="update"
+            parameterType="com.example.demo.entity.Customer">
+        UPDATE customers
+        SET name = #{name},
+            phone = #{phone},
+            email = #{email},
+            identity_number = #{identityNumber},
+            birthday = #{birthday},
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById"
+            parameterType="java.lang.Integer">
+        DELETE FROM customers
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
