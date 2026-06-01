@@ -35,7 +35,7 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getByIdCustomer(@PathVariable("id") Integer id) {
         Customer customer = customerService.getByIdCustomer(id);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customer);
+        return ResponseEntity.ok(customer);
     }
 
     @PostMapping
